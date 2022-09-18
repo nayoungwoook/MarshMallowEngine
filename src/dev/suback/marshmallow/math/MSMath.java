@@ -64,32 +64,10 @@ public class MSMath {
 		double _zx = (Math.cos(_rot) * _zDist), _zy = (Math.sin(_rot) * _zDist);
 
 		MSVector result = new MSVector(0, 0);
-		
+
 		result.setX((position.getX() - MSCamera.position.getX() - (xx + _zx)));
 		result.setY((position.getY() - MSCamera.position.getY() - (yy + _zy)));
 
-		return result;
-	}
-
-	public static MSVector toWorld(MSVector position) {
-
-		int Width = MSDisplay.width, Height = MSDisplay.height;
-
-		double _dist = MSMath.getDistance(
-				new MSVector(Width / 2 + MSCamera.position.getX(), Height / 2 + MSCamera.position.getY()),
-				new MSVector(position.getX(), position.getY()));
-		double _rot = Math.atan2(Height / 2 + MSCamera.position.getY() - position.getY(),
-				Width / 2 + MSCamera.position.getX() - position.getX()) + MSCamera.rotation;
-		double xx = (position.getX() + (Width / 2 + MSCamera.position.getX()));
-		double yy = (position.getY() + (Height / 2 + MSCamera.position.getY()));
-		double _zDist = _dist * (MSCamera.position.getZ());
-
-		double _zx = (Math.cos(_rot) / _zDist), _zy = (Math.sin(_rot) / _zDist);
-
-		MSVector result = new MSVector(0, 0);
-
-		result.setX((position.getX() + MSCamera.position.getX() - (xx + _zx)));
-		result.setY((position.getY() + MSCamera.position.getY() - (yy + _zy)));
 		return result;
 	}
 

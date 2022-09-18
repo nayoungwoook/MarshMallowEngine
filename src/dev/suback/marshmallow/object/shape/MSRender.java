@@ -1,11 +1,13 @@
 package dev.suback.marshmallow.object.shape;
 
 import java.awt.Color;
-import java.awt.Font;
+import java.util.ArrayList;
 
 import dev.suback.marshmallow.MSMain;
 import dev.suback.marshmallow.object.MSObject;
 import dev.suback.marshmallow.object.MSSprite;
+import dev.suback.marshmallow.resource.MSFont;
+import dev.suback.marshmallow.transform.MSVector;
 import dev.suback.marshmallow.ui.MSUI;
 import dev.suback.marshmallow.ui.MSUIRect;
 import dev.suback.marshmallow.ui.MSUIText;
@@ -19,13 +21,13 @@ public class MSRender extends MSObject {
 	}
 
 	private static Color color = Color.black;
-	private static Font font = null;
+	private static MSFont font = null;
 
-	public static final void setFont(Font f) {
+	public static final void setFont(MSFont f) {
 		font = f;
 	}
 
-	public static final Font getFont() {
+	public static final MSFont getFont() {
 		return font;
 	}
 
@@ -85,6 +87,30 @@ public class MSRender extends MSObject {
 		MSMain.renderObjects.add(tex);
 	}
 
+	public static final void renderText(String text, int x, int y, String align) {
+		MSText tex = new MSText(text, x, y);
+		tex.textAlign = align;
+		MSMain.renderObjects.add(tex);
+	}
+	
+	public static final void renderText(String text, int x, int y, double z, String align) {
+		MSText tex = new MSText(text, x, y);
+		tex.position.setZ(z);
+		tex.textAlign = align;
+		MSMain.renderObjects.add(tex);
+	}
+
+	public static final void renderPolygon(ArrayList<MSVector> pivots) {
+		MSPoly poly = new MSPoly(pivots);
+		MSMain.renderObjects.add(poly);
+	}
+
+	public static final void renderPolygon(MSPoly poly) {
+		MSMain.renderObjects.add(poly);
+	}
+
+	///////////////////////////////////////////////////////////////
+
 	public static final void renderText(MSText tex) {
 		MSMain.renderObjects.add(tex);
 	}
@@ -100,6 +126,8 @@ public class MSRender extends MSObject {
 	public static final void renderRect(MSOval oval) {
 		MSMain.renderObjects.add(oval);
 	}
+
+	// UI
 
 	public static final void renderUI(MSUI ui) {
 		MSMain.renderObjects.add(ui);

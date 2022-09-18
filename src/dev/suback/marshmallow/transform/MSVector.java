@@ -14,6 +14,12 @@ public class MSVector {
 		this.y = y;
 		this.z = z;
 	}
+	
+	public MSVector cloneVector() {
+		MSVector result = new MSVector(0, 0);
+		result.setTransform(x, y, z);
+		return result;
+	}
 
 	public double getX() {
 		return x;

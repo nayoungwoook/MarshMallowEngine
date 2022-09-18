@@ -1,8 +1,8 @@
 package dev.suback.marshmallow;
 
 import java.awt.Canvas;
-
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,21 +53,22 @@ public class MSMain extends Canvas implements Runnable {
 		} catch (Exception e) {
 			return;
 		}
-
+		
 		renderObjects.clear();
-
-		g.clearRect(0, 0, MSDisplay.width, MSDisplay.height);
-
+	
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.clearRect(0, 0, MSDisplay.width, MSDisplay.height);
+		
 		if (state != null)
 			state.render();
 
 		Collections.sort(renderObjects);
-
-		renderImage(g);
+		
+		renderImage(g2d);
 
 		try {
 			bs.show();
-			g.dispose();
+			g2d.dispose();
 		} catch (Exception e) {
 		}
 	}
@@ -75,15 +76,15 @@ public class MSMain extends Canvas implements Runnable {
 	public static ArrayList<MSObject> renderObjects = new ArrayList<>();
 	public static int objectCount = 0;
 
-	private void renderImage(Graphics g) {
+	private void renderImage(Graphics2D g) {
 		for (int i = 0; i < renderObjects.size(); i++) {
 			renderObjects.get(i).engineRender(g);
 		}
 		objectCount = renderObjects.size();
 	}
 
-	public static int targetFps = 1000, targetUps = 60;
-	public static int fps = 1000, ups = 60;
+	public static int targetFps = 60, targetUps = 60;
+	public static int fps = 60, ups = 60;
 
 	@Override
 	public void run() {

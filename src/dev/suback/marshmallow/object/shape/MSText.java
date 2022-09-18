@@ -1,8 +1,10 @@
 package dev.suback.marshmallow.object.shape;
 
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
+import dev.suback.marshmallow.camera.MSCamera;
 import dev.suback.marshmallow.object.MSObject;
 
 public class MSText extends MSObject {
@@ -16,25 +18,33 @@ public class MSText extends MSObject {
 	}
 
 	@Override
-	public void engineRender(Graphics g2d) {
+	public void engineRender(Graphics2D g2d) {
 		calculateRender();
+
+		if (pFont != null)
+			g2d.setFont(pFont.font);
 
 		FontMetrics metrics = g2d.getFontMetrics();
 		int x = 0;
 
 		if (textAlign.equals("center"))
-			x = (int) (renderPosition.getX() - metrics.stringWidth(text) / 2);
-		else if (textAlign.equals("left"))
-			x = (int) (renderPosition.getX() - metrics.stringWidth(text));
+			x = (int) (position.getX() - metrics.stringWidth(text) / 2);
+		else if (textAlign.equals("right"))
+			x = (int) (position.getX() - metrics.stringWidth(text));
 		else
-			x = (int) (renderPosition.getX() + metrics.stringWidth(text) / 2);
+			x = (int) (position.getX());
 
-		int y = (int) (metrics.getAscent()
-				+ (renderPosition.getY() - (metrics.getAscent() - metrics.getDescent())) / 2);
+		int y = (int) position.getY() + metrics.getHeight() / 2;
+
+		AffineTransform backup = g2d.getTransform();
+		g2d.translate(this.renderPosition.getX(), this.renderPosition.getY());
+		g2d.rotate(this.rotation + MSCamera.rotation, this.renderWidth * anchor.getX(),
+				this.renderHeight * anchor.getY());
 
 		g2d.setColor(pColor);
-		g2d.setFont(pFont);
-		g2d.drawString(text, x, y);
+		g2d.drawString(text, 0, 0);
+		
+		g2d.setTransform(backup);
 	}
 
 }

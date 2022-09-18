@@ -1,9 +1,6 @@
 package dev.suback.marshmallow.ui;
 
-import java.awt.Graphics;
-
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 
 import dev.suback.marshmallow.object.MSObject;
 
@@ -14,7 +11,7 @@ public class MSUI extends MSObject {
 	}
 
 	@Override
-	public void engineRender(Graphics g) {
+	public void engineRender(Graphics2D g2d) {
 
 		int xflip = 1, yflip = 1;
 
@@ -23,19 +20,8 @@ public class MSUI extends MSObject {
 		if (flipY)
 			yflip = -1;
 
-		Graphics2D g2d = (Graphics2D) g;
-
-		g.setColor(pColor);
-		AffineTransform backup = g2d.getTransform();
-
+		g2d.setColor(pColor);
 		float renderX = (int) position.getX() - getWidth() / 2, renderY = (int) position.getY() - getHeight() / 2;
-
-		AffineTransform a = AffineTransform.getRotateInstance(rotation, renderX + getAnchor().getX() * xflip,
-				renderY + getAnchor().getY() * yflip);
-
-		g2d.setTransform(a);
-		g2d.drawImage(getSprite().getImage(), (int) renderX, (int) renderY, getWidth(), getHeight(), null);
-		g2d.setTransform(backup);
-
+		g2d.drawImage(getSprite().getImage(), (int) renderX, (int) renderY, getWidth() * xflip, getHeight() * yflip, null);
 	}
 }
