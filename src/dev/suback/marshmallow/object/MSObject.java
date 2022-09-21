@@ -112,16 +112,15 @@ public class MSObject implements Comparable<MSObject> {
 
 		if (!visible || !isRender)
 			return;
-		
+
 		AffineTransform backup = g2d.getTransform();
 		g2d.translate(this.renderPosition.getX(), this.renderPosition.getY());
 		g2d.rotate(this.rotation + MSCamera.rotation, this.renderWidth * anchor.getX(),
 				this.renderHeight * anchor.getY());
 
 		if (sprite != null)
-			g2d.drawImage(sprite.getImage(), (int) this.renderPosition.getX(), (int) this.renderPosition.getY(),
-					(int) Math.ceil(renderWidth), (int) Math.ceil(renderHeight), null);
-		
+			g2d.drawImage(sprite.getImage(), 0, 0, (int) Math.ceil(renderWidth), (int) Math.ceil(renderHeight), null);
+
 		g2d.setTransform(backup);
 	}
 
