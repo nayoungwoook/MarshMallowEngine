@@ -60,7 +60,7 @@ public class MSDisplay extends JFrame {
 		compo.setMaximumSize(new Dimension(width, height));
 		compo.setMinimumSize(new Dimension(width, height));
 		compo.setSize(width, height);
-		
+
 		dispose();
 		setUndecorated(!deco);
 		setVisible(true);
@@ -78,12 +78,12 @@ public class MSDisplay extends JFrame {
 
 		device.setFullScreenWindow(this);
 		device.setDisplayMode(new DisplayMode(1920, 1080, 32, 0));
-		
+
 		compo.setPreferredSize(new Dimension(width, height));
 		compo.setMaximumSize(new Dimension(width, height));
 		compo.setMinimumSize(new Dimension(width, height));
 		compo.setSize(width, height);
-		
+
 		setResizable(false);
 		requestFocus();
 	}
